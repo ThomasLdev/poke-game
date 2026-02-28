@@ -1,25 +1,15 @@
-import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router';
-import { getPokemon } from '@/api/pokemon';
-import type { Pokemon } from '@/types/pokemon';
+import { usePokemon } from '@/hooks/usePokemon';
+import { usePokemonMoves } from '@/hooks/usePokemonMoves';
 import { PokemonNumber, PokemonTypes } from '@/components/Pokemon';
-import { Stats, Details } from '@/components/PokemonDetailPage';
+import { Stats, Details, Moves } from '@/components/PokemonDetailPage';
 import { Header } from '@/components/Layout';
 
 function PokemonDetailPage() {
   const { id } = useParams();
   const { state } = useLocation();
-  const [pokemon, setPokemon] = useState<Pokemon | null>(state?.pokemon ?? null);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    console.log(pokemon);
-    if (pokemon) return;
-
-    getPokemon(id!)
-      .then(setPokemon)
-      .catch((err) => setError(err instanceof Error ? err.message : 'Failed to load Pokemon'));
-  }, [id, pokemon]);
+  const { pokemon, error } = usePokemon(id!, state?.pokemon ?? null);
+  const { moves, loading: movesLoading } = usePokemonMoves(pokemon?.moves);
 
   if (error)
     return <div className="min-h-screen bg-slate-900 text-red-400 flex items-center justify-center">{error}</div>;
@@ -28,11 +18,15 @@ function PokemonDetailPage() {
 
   return (
     <div className="min-h-screen bg-slate-900">
-      {/* Header */}
       <Header />
 
       <div className="max-w-5xl mx-auto px-4 py-8">
-        {/* Pokemon Hero Section */}
+        <div className="mb-5">
+          <a className="text-white font-bold" href="/pokemons">
+            Back
+          </a>
+        </div>
+
         <div className="bg-linear-to-br from-orange-500/10 via-red-500/10 to-yellow-500/10 border border-slate-700/50 rounded-3xl p-8 mb-8">
           <div className="flex flex-col md:flex-row items-center gap-8">
             {/* Image */}
@@ -60,11 +54,8 @@ function PokemonDetailPage() {
           </div>
         </div>
 
-        {/* Stats & Info Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <Stats stats={pokemon.stats} />
-
-          {/* Details */}
           <Details pokemon={pokemon} />
         </div>
 
@@ -127,32 +118,7 @@ function PokemonDetailPage() {
         {/* Moves Preview */}
         <div className="bg-slate-800/60 border border-slate-700/50 rounded-2xl p-6">
           <h2 className="text-xl font-bold text-white mb-4">Moves</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-            <div className="px-3 py-2 bg-orange-500/10 border border-orange-500/20 rounded-lg text-sm text-orange-400 text-center">
-              Flamethrower
-            </div>
-            <div className="px-3 py-2 bg-sky-500/10 border border-sky-500/20 rounded-lg text-sm text-sky-400 text-center">
-              Air Slash
-            </div>
-            <div className="px-3 py-2 bg-orange-500/10 border border-orange-500/20 rounded-lg text-sm text-orange-400 text-center">
-              Fire Blast
-            </div>
-            <div className="px-3 py-2 bg-purple-500/10 border border-purple-500/20 rounded-lg text-sm text-purple-400 text-center">
-              Dragon Claw
-            </div>
-            <div className="px-3 py-2 bg-orange-500/10 border border-orange-500/20 rounded-lg text-sm text-orange-400 text-center">
-              Heat Wave
-            </div>
-            <div className="px-3 py-2 bg-slate-500/10 border border-slate-500/20 rounded-lg text-sm text-slate-400 text-center">
-              Slash
-            </div>
-            <div className="px-3 py-2 bg-yellow-500/10 border border-yellow-500/20 rounded-lg text-sm text-yellow-400 text-center">
-              Solar Beam
-            </div>
-            <div className="px-3 py-2 bg-sky-500/10 border border-sky-500/20 rounded-lg text-sm text-sky-400 text-center">
-              Fly
-            </div>
-          </div>
+          <Moves moves={moves} loading={movesLoading} />
         </div>
       </div>
     </div>

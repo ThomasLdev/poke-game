@@ -3,7 +3,12 @@ import type { PokemonListResponse } from '@/types/pokemon.ts';
 import { GridSkeletonCard } from '@/components/PokemonListPage';
 import { PokemonNumber, PokemonTypes } from '@/components/Pokemon';
 
-export function Grid({ data, showSkeleton }: { data: PokemonListResponse | null; showSkeleton: boolean }) {
+interface GridProps {
+  data: PokemonListResponse | null;
+  showSkeleton: boolean;
+}
+
+export function Grid({ data, showSkeleton }: GridProps) {
   return (
     <div className="max-w-7xl mx-auto px-4 pb-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
       {showSkeleton

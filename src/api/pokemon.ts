@@ -1,8 +1,12 @@
 import { get } from '@/api/client';
-import type { Pokemon, PokemonListResponse } from '@/types/pokemon';
+import type { MoveDetail, Pokemon, PokemonListResponse } from '@/types/pokemon';
 
 export function getPokemon(idOrName: number | string): Promise<Pokemon> {
   return get<Pokemon>(`/pokemon/${idOrName}`);
+}
+
+export function getMove(name: string): Promise<MoveDetail> {
+  return get<MoveDetail>(`/move/${name}`);
 }
 
 export async function listPokemons(limit: number = 20, offset: number = 0) {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { listPokemons } from '@/api/pokemon';
-import type { PokemonListResponse } from '@/types/pokemon';
+import { listPokemons, getPokemon } from '@/api/pokemon';
+import type { PokemonListResponse, Pokemon } from '@/types/pokemon';
 
 export function usePokemonList(limit: number = 20, offset: number = 0) {
   const [data, setData] = useState<PokemonListResponse | null>(null);
@@ -56,4 +56,41 @@ export function usePokemonList(limit: number = 20, offset: number = 0) {
   }, [limit, offset]);
 
   return { data, loading, showSkeleton, error };
+}
+
+export function usePokemon(id: string, initialData?: Pokemon | null) {
+  const [pokemon, setPokemon] = useState<Pokemon | null>(initialData ?? null);
+  const [loading, setLoading] = useState<boolean>(!initialData);
+  const [error, setError] = useState<string | null>(null);
+  const [prevId, setPrevId] = useState(id);
+
+  if (id !== prevId) {
+    setPrevId(id);
+    setPokemon(null);
+    setLoading(true);
+    setError(null);
+  }
+
+  useEffect(() => {
+    if (initialData) return;
+
+    let ignore = false;
+
+    getPokemon(id)
+      .then((data) => {
+        if (!ignore) setPokemon(data);
+      })
+      .catch((err) => {
+        if (!ignore) setError(err instanceof Error ? err.message : 'Failed to load Pokemon');
+      })
+      .finally(() => {
+        if (!ignore) setLoading(false);
+      });
+
+    return () => {
+      ignore = true;
+    };
+  }, [id, initialData]);
+
+  return { pokemon, loading, error };
 }

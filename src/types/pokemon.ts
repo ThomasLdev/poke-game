@@ -21,6 +21,27 @@ export interface Pokemon {
   stats: PokemonStat[];
   abilities: PokemonAbility[];
   sprites: PokemonSprites;
+  moves: PokemonMoveEntry[];
+}
+
+export interface PokemonMoveEntry {
+  move: NamedAPIResource;
+  version_group_details: VersionGroupDetail[];
+}
+
+export interface VersionGroupDetail {
+  level_learned_at: number;
+  move_learn_method: NamedAPIResource;
+  version_group: NamedAPIResource;
+}
+
+export interface MoveDetail {
+  name: string;
+  type: NamedAPIResource;
+  power: number | null;
+  accuracy: number | null;
+  pp: number;
+  damage_class: NamedAPIResource;
 }
 
 export interface PokemonType {

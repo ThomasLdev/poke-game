@@ -25,16 +25,14 @@ export function Details({ pokemon }: { pokemon: Pokemon }) {
         </div>
       </div>
 
-      {/* Abilities list */}
       <div className="mt-4">
         <h3 className="text-sm text-slate-500 mb-2">All Abilities</h3>
         <div className="flex flex-wrap gap-2">
-          <span className="px-3 py-1 bg-slate-900/50 border border-slate-700 rounded-lg text-sm text-slate-300">
-            Blaze
-          </span>
-          <span className="px-3 py-1 bg-slate-900/50 border border-yellow-500/30 rounded-lg text-sm text-yellow-400">
-            Solar Power (Hidden)
-          </span>
+          {pokemon.abilities.map((ability) =>
+              ability.is_hidden
+                  ? <span className="px-3 py-1 bg-slate-900/50 border border-yellow-500/30 rounded-lg text-sm text-yellow-400 capitalize">{ability.ability.name} (Hidden)</span>
+                  : <span className="px-3 py-1 bg-slate-900/50 border border-slate-700 rounded-lg text-sm text-slate-300 capitalize">{ability.ability.name}</span>
+          )}
         </div>
       </div>
     </div>

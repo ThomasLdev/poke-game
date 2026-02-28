@@ -1,18 +1,13 @@
-export function Pagination({
-  next,
-  previous,
-  onPageChange,
-  limit,
-  offset,
-  loading,
-}: {
-  next: string | null;
-  previous: string | null;
-  onPageChange: (offset: number) => void;
-  limit: number;
-  offset: number;
-  loading: boolean;
-}) {
+interface PaginationProps {
+    next: string | null;
+    previous: string | null;
+    onPageChange: (offset: number) => void;
+    limit: number;
+    offset: number;
+    loading: boolean;
+}
+
+export function Pagination({next, previous, onPageChange, limit, offset, loading}: PaginationProps) {
   const baseClass = 'px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg ';
   const activeClass = 'text-slate-300 hover:border-yellow-500/50 transition-colors';
   const inactiveClass = 'text-slate-500';

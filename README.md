@@ -1,73 +1,85 @@
-# React + TypeScript + Vite
+# PokéSearch
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![CI](https://github.com/ThomasLdev/poke-game/actions/workflows/ci.yml/badge.svg)](https://github.com/ThomasLdev/poke-game/actions/workflows/ci.yml)
+![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/ThomasLdev/COVERAGE_GIST_ID/raw/poke-game-coverage.json)
 
-Currently, two official plugins are available:
+A Pokemon exploration app built with React, TypeScript, and Tailwind CSS. Browse, search, and discover detailed information about Pokemon using the [PokeAPI](https://pokeapi.co/).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- Paginated list of all Pokemon with artwork and types
+- Detailed Pokemon pages with stats, abilities, and more
+- Responsive design with Tailwind CSS
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- **React 19** with React Router
+- **TypeScript**
+- **Vite** — dev server and build tool
+- **Tailwind CSS 4** — styling
+- **Vitest** — testing with v8 coverage
+- **ESLint + Prettier** — code quality and formatting
+- **Knip** — unused export detection
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Getting Started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Prerequisites
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Node.js 24+
+- npm
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+### Installation
+
+```bash
+git clone git@github.com:ThomasLdev/poke-game.git
+cd poke-game
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Development
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
+```bash
+npm run dev
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+### Build
+
+```bash
+npm run build
+```
+
+### Preview production build
+
+```bash
+npm run preview
+```
+
+## Scripts
+
+| Script | Description |
+|--------|-------------|
+| `npm run dev` | Start dev server |
+| `npm run build` | Typecheck + production build |
+| `npm run lint` | Run ESLint |
+| `npm run typecheck` | Run TypeScript type checking |
+| `npm run format` | Format code with Prettier |
+| `npm run format:check` | Check formatting |
+| `npm run test` | Run tests once |
+| `npm run test:watch` | Run tests in watch mode |
+| `npm run test:coverage` | Run tests with coverage report |
+| `npm run knip` | Check for unused exports |
+
+## Project Structure
+
+```
+src/
+├── api/             # API client and Pokemon endpoints
+├── components/      # Reusable UI components
+├── hooks/           # Custom React hooks
+├── pages/           # Route page components
+├── types/           # TypeScript type definitions
+├── App.tsx          # Router setup
+└── main.tsx         # Entry point
+
+tests/               # Test files (mirrors src/ structure)
 ```

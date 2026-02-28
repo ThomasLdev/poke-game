@@ -1,6 +1,6 @@
-import type {Pokemon} from "@/types/pokemon.ts";
+import type { Pokemon } from '@/types/pokemon.ts';
 
-export function Details({pokemon}: {pokemon: Pokemon}) {
+export function Details({ pokemon }: { pokemon: Pokemon }) {
   const abilitiesToShow = pokemon.abilities.filter((ability) => !ability.is_hidden);
 
   return (
@@ -29,12 +29,12 @@ export function Details({pokemon}: {pokemon: Pokemon}) {
       <div className="mt-4">
         <h3 className="text-sm text-slate-500 mb-2">All Abilities</h3>
         <div className="flex flex-wrap gap-2">
-                <span className="px-3 py-1 bg-slate-900/50 border border-slate-700 rounded-lg text-sm text-slate-300">
-                  Blaze
-                </span>
+          <span className="px-3 py-1 bg-slate-900/50 border border-slate-700 rounded-lg text-sm text-slate-300">
+            Blaze
+          </span>
           <span className="px-3 py-1 bg-slate-900/50 border border-yellow-500/30 rounded-lg text-sm text-yellow-400">
-                  Solar Power (Hidden)
-                </span>
+            Solar Power (Hidden)
+          </span>
         </div>
       </div>
     </div>

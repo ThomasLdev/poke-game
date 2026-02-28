@@ -6,9 +6,7 @@ function HomePage() {
         <h1 className="text-6xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-yellow-400 via-red-500 to-pink-500 mb-2 tracking-tight">
           PokéSearch
         </h1>
-        <p className="text-slate-400 text-lg">
-          Explore the world of Pokémon
-        </p>
+        <p className="text-slate-400 text-lg">Explore the world of Pokémon</p>
       </div>
 
       {/* Search Bar */}
@@ -20,6 +18,7 @@ function HomePage() {
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
               fill="currentColor"
+              aria-hidden="true"
             >
               <path
                 fillRule="evenodd"
@@ -31,6 +30,7 @@ function HomePage() {
           <input
             type="text"
             placeholder="Search for a Pokémon..."
+            aria-label="Search for a Pokémon"
             className="w-full pl-12 pr-4 py-4 bg-slate-800/80 border border-slate-700 rounded-2xl text-white placeholder-slate-500 text-lg focus:outline-none focus:ring-2 focus:ring-yellow-400/50 focus:border-yellow-400/50 backdrop-blur-sm transition-all"
           />
         </div>

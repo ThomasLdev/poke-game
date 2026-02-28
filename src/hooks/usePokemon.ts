@@ -1,6 +1,6 @@
-import {useState, useEffect} from "react";
-import {listPokemons} from "@/api/pokemon";
-import type {PokemonListResponse} from "@/types/pokemon";
+import { useState, useEffect } from 'react';
+import { listPokemons } from '@/api/pokemon';
+import type { PokemonListResponse } from '@/types/pokemon';
 
 export function usePokemonList(limit: number = 20, offset: number = 0) {
   const [data, setData] = useState<PokemonListResponse | null>(null);
@@ -39,7 +39,7 @@ export function usePokemonList(limit: number = 20, offset: number = 0) {
           }
         } else {
           if (!ignore) {
-            setError("An unexpected error occurred");
+            setError('An unexpected error occurred');
           }
         }
       } finally {
@@ -52,8 +52,8 @@ export function usePokemonList(limit: number = 20, offset: number = 0) {
     return () => {
       ignore = true;
       if (skeletonTimeout) clearTimeout(skeletonTimeout);
-    }
+    };
   }, [limit, offset]);
 
-  return {data, loading, showSkeleton, error};
+  return { data, loading, showSkeleton, error };
 }

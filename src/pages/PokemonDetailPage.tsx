@@ -1,14 +1,14 @@
-import {useState, useEffect} from 'react';
-import {useParams, useLocation} from 'react-router';
-import {getPokemon} from '@/api/pokemon';
-import type {Pokemon} from '@/types/pokemon';
-import {PokemonNumber, PokemonTypes} from '@/components/Pokemon';
-import {Stats, Details} from '@/components/PokemonDetailPage';
-import {Header} from '@/components/Layout';
+import { useState, useEffect } from 'react';
+import { useParams, useLocation } from 'react-router';
+import { getPokemon } from '@/api/pokemon';
+import type { Pokemon } from '@/types/pokemon';
+import { PokemonNumber, PokemonTypes } from '@/components/Pokemon';
+import { Stats, Details } from '@/components/PokemonDetailPage';
+import { Header } from '@/components/Layout';
 
 function PokemonDetailPage() {
-  const {id} = useParams();
-  const {state} = useLocation();
+  const { id } = useParams();
+  const { state } = useLocation();
   const [pokemon, setPokemon] = useState<Pokemon | null>(state?.pokemon ?? null);
   const [error, setError] = useState<string | null>(null);
 
@@ -21,8 +21,10 @@ function PokemonDetailPage() {
       .catch((err) => setError(err instanceof Error ? err.message : 'Failed to load Pokemon'));
   }, [id, pokemon]);
 
-  if (error) return <div className="min-h-screen bg-slate-900 text-red-400 flex items-center justify-center">{error}</div>;
-  if (!pokemon) return <div className="min-h-screen bg-slate-900 text-white flex items-center justify-center">Loading...</div>;
+  if (error)
+    return <div className="min-h-screen bg-slate-900 text-red-400 flex items-center justify-center">{error}</div>;
+  if (!pokemon)
+    return <div className="min-h-screen bg-slate-900 text-white flex items-center justify-center">Loading...</div>;
 
   return (
     <div className="min-h-screen bg-slate-900">
@@ -37,7 +39,7 @@ function PokemonDetailPage() {
             <div className="shrink-0">
               <div className="w-64 h-64 bg-linear-to-br from-orange-500/20 to-red-600/20 rounded-full flex items-center justify-center">
                 <img
-                  src={pokemon.sprites.other["official-artwork"].front_default}
+                  src={pokemon.sprites.other['official-artwork'].front_default}
                   alt={pokemon.name}
                   className="w-56 h-56 object-contain drop-shadow-2xl"
                 />
@@ -46,10 +48,10 @@ function PokemonDetailPage() {
 
             {/* Basic Info */}
             <div className="flex-1 text-center md:text-left">
-              <PokemonNumber id={pokemon.id} className={"text-lg"} />
+              <PokemonNumber id={pokemon.id} className={'text-lg'} />
               <h1 className="text-5xl font-extrabold text-white mb-4 capitalize">{pokemon.name}</h1>
               <div className="flex gap-2 justify-center md:justify-start mb-6">
-                <PokemonTypes pokemonTypes={pokemon.types} className={"px-4 py-1.5 text-sm"} />
+                <PokemonTypes pokemonTypes={pokemon.types} className={'px-4 py-1.5 text-sm'} />
               </div>
               <p className="text-slate-400 leading-relaxed max-w-lg">
                 It spits fire that is hot enough to melt boulders. It may cause forest fires by blowing flames.
@@ -72,7 +74,11 @@ function PokemonDetailPage() {
           <div className="flex items-center justify-center gap-4 flex-wrap">
             <a href="/pokemons/4" className="text-center group cursor-pointer">
               <div className="w-24 h-24 mx-auto mb-2 bg-linear-to-br from-orange-500/20 to-red-600/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png" alt="Charmander" className="w-20 h-20 object-contain" />
+                <img
+                  src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png"
+                  alt="Charmander"
+                  className="w-20 h-20 object-contain"
+                />
               </div>
               <p className="text-white text-sm font-medium">Charmander</p>
               <p className="text-slate-500 text-xs">#004</p>
@@ -80,14 +86,18 @@ function PokemonDetailPage() {
 
             <div className="text-slate-600 flex flex-col items-center">
               <span className="text-xs text-slate-500 mb-1">Lv. 16</span>
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </div>
 
             <a href="/pokemons/5" className="text-center group cursor-pointer">
               <div className="w-24 h-24 mx-auto mb-2 bg-linear-to-br from-orange-500/20 to-red-600/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/5.png" alt="Charmeleon" className="w-20 h-20 object-contain" />
+                <img
+                  src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/5.png"
+                  alt="Charmeleon"
+                  className="w-20 h-20 object-contain"
+                />
               </div>
               <p className="text-white text-sm font-medium">Charmeleon</p>
               <p className="text-slate-500 text-xs">#005</p>
@@ -95,14 +105,18 @@ function PokemonDetailPage() {
 
             <div className="text-slate-600 flex flex-col items-center">
               <span className="text-xs text-slate-500 mb-1">Lv. 36</span>
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </div>
 
             <div className="text-center">
               <div className="w-24 h-24 mx-auto mb-2 bg-linear-to-br from-orange-500/20 to-red-600/20 rounded-full flex items-center justify-center ring-2 ring-yellow-500/50">
-                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png" alt="Charizard" className="w-20 h-20 object-contain" />
+                <img
+                  src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png"
+                  alt="Charizard"
+                  className="w-20 h-20 object-contain"
+                />
               </div>
               <p className="text-yellow-400 text-sm font-medium">Charizard</p>
               <p className="text-slate-500 text-xs">#006</p>

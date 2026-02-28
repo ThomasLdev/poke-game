@@ -1,11 +1,11 @@
-import type {PokemonStat} from "@/types/pokemon.ts";
+import type { PokemonStat } from '@/types/pokemon.ts';
 
-export function Stats({stats}: {stats: PokemonStat[]}) {
+export function Stats({ stats }: { stats: PokemonStat[] }) {
   return (
     <div className="bg-slate-800/60 border border-slate-700/50 rounded-2xl p-6">
       <h2 className="text-xl font-bold text-white mb-4">Base Stats</h2>
       <div className="space-y-3">
-        {stats.map((stat) =>
+        {stats.map((stat) => (
           <div key={stat.stat.name}>
             <div className="flex justify-between text-sm mb-1">
               <span className="text-slate-400 capitalize">{stat.stat.name}</span>
@@ -15,7 +15,7 @@ export function Stats({stats}: {stats: PokemonStat[]}) {
               <div className="h-full bg-green-500 rounded-full" style={{ width: `${stat.base_stat}%` }}></div>
             </div>
           </div>
-        )}
+        ))}
       </div>
     </div>
   );

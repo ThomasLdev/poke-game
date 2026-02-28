@@ -1,0 +1,26 @@
+node_modules/
+dist/
+.git/
+.github/
+tests/
+k8s/
+coverage/
+
+# IDE / editor configs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment files
+.env
+.env.*
+
+# Docker / compose files (not needed inside image)
+Dockerfile
+compose.yaml
+.dockerignore
+
+# Misc
+*.md
+*.log

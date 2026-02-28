@@ -1,0 +1,59 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: poke-game
+  namespace: poke-game
+  labels:
+    app: poke-game
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: poke-game
+  template:
+    metadata:
+      labels:
+        app: poke-game
+    spec:
+      containers:
+        - name: poke-game
+          image: ghcr.io/thomasldev/poke-game:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+              name: http
+          resources:
+            requests:
+              memory: "32Mi"
+              cpu: "10m"
+            limits:
+              memory: "64Mi"
+              cpu: "100m"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: poke-game
+  namespace: poke-game
+spec:
+  selector:
+    app: poke-game
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      nodePort: 30081
+  type: NodePort

@@ -10,6 +10,16 @@ export interface NamedAPIResource {
   url: string;
 }
 
+export interface FlavorTextEntry {
+  flavor_text: string;
+  language: {
+    name: string;
+  }
+  version: {
+    name: string;
+  }
+}
+
 export interface Pokemon {
   id: number;
   name: string;
@@ -22,6 +32,11 @@ export interface Pokemon {
   abilities: PokemonAbility[];
   sprites: PokemonSprites;
   moves: PokemonMoveEntry[];
+  species_detail: PokemonSpecies | null;
+}
+
+export interface PokemonSpecies {
+  flavor_text_entries: FlavorTextEntry[];
 }
 
 export interface PokemonMoveEntry {
@@ -66,3 +81,7 @@ export interface PokemonSprites {
     };
   };
 }
+
+// export interface PokemonEvolutionTree {
+//
+// }

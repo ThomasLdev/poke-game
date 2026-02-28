@@ -30,8 +30,8 @@ export function Details({ pokemon }: { pokemon: Pokemon }) {
         <div className="flex flex-wrap gap-2">
           {pokemon.abilities.map((ability) =>
               ability.is_hidden
-                  ? <span className="px-3 py-1 bg-slate-900/50 border border-yellow-500/30 rounded-lg text-sm text-yellow-400 capitalize">{ability.ability.name} (Hidden)</span>
-                  : <span className="px-3 py-1 bg-slate-900/50 border border-slate-700 rounded-lg text-sm text-slate-300 capitalize">{ability.ability.name}</span>
+                  ? <span key={ability.ability.name} className="px-3 py-1 bg-slate-900/50 border border-yellow-500/30 rounded-lg text-sm text-yellow-400 capitalize">{ability.ability.name} (Hidden)</span>
+                  : <span key={ability.ability.name} className="px-3 py-1 bg-slate-900/50 border border-slate-700 rounded-lg text-sm text-slate-300 capitalize">{ability.ability.name}</span>
           )}
         </div>
       </div>

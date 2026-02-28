@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { listPokemons, getPokemon } from '@/api/pokemon';
-import type { PokemonListResponse, Pokemon } from '@/types/pokemon';
+import {getPokemonList, getPokemon, getSpecies} from '@/api/pokemon';
+import type {PokemonListResponse, Pokemon, PokemonSpecies} from '@/types/pokemon';
 
 export function usePokemonList(limit: number = 20, offset: number = 0) {
   const [data, setData] = useState<PokemonListResponse | null>(null);
@@ -25,7 +25,7 @@ export function usePokemonList(limit: number = 20, offset: number = 0) {
       setError(null);
 
       try {
-        const list = await listPokemons(limit, offset);
+        const list = await getPokemonList(limit, offset);
 
         if (!ignore) {
           if (skeletonTimeout) clearTimeout(skeletonTimeout);
@@ -62,15 +62,6 @@ export function usePokemon(id: string, initialData?: Pokemon | null) {
   const [pokemon, setPokemon] = useState<Pokemon | null>(initialData ?? null);
   const [loading, setLoading] = useState<boolean>(!initialData);
   const [error, setError] = useState<string | null>(null);
-  const [prevId, setPrevId] = useState(id);
-
-  if (id !== prevId) {
-    setPrevId(id);
-    setPokemon(null);
-    setLoading(true);
-    setError(null);
-  }
-
   useEffect(() => {
     if (initialData) return;
 
@@ -93,4 +84,47 @@ export function usePokemon(id: string, initialData?: Pokemon | null) {
   }, [id, initialData]);
 
   return { pokemon, loading, error };
+}
+
+export function usePokemonSpecies(idOrName: number | string) {
+  const [species, setSpecies] = useState<PokemonSpecies | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let ignore = false;
+
+    async function fetchData() {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const data = await getSpecies(idOrName);
+
+        if (!ignore) {
+          setSpecies(data);
+        }
+      } catch (error) {
+        if (error instanceof Error) {
+          if (!ignore) {
+            setError(error.message);
+          }
+        } else {
+          if (!ignore) {
+            setError('An unexpected error occurred');
+          }
+        }
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+
+    return () => {
+      ignore = true;
+    };
+  }, [idOrName]);
+
+  return { species, loading, error };
 }

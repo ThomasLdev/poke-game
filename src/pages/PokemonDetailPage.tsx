@@ -1,20 +1,20 @@
 import { useParams, useLocation } from 'react-router';
 import { usePokemon } from '@/hooks/usePokemon';
-import { usePokemonMoves } from '@/hooks/usePokemonMoves';
 import { PokemonNumber, PokemonTypes } from '@/components/Pokemon';
-import { Stats, Details, Moves } from '@/components/PokemonDetailPage';
+import {Stats, Details, Moves, EvolutionTree} from '@/components/PokemonDetailPage';
 import { Header } from '@/components/Layout';
 
 function PokemonDetailPage() {
   const { id } = useParams();
   const { state } = useLocation();
   const { pokemon, error } = usePokemon(id!, state?.pokemon ?? null);
-  const { moves, loading: movesLoading } = usePokemonMoves(pokemon?.moves);
 
   if (error)
     return <div className="min-h-screen bg-slate-900 text-red-400 flex items-center justify-center">{error}</div>;
   if (!pokemon)
     return <div className="min-h-screen bg-slate-900 text-white flex items-center justify-center">Loading...</div>;
+
+  console.log(pokemon);
 
   return (
     <div className="min-h-screen bg-slate-900">
@@ -47,9 +47,6 @@ function PokemonDetailPage() {
               <div className="flex gap-2 justify-center md:justify-start mb-6">
                 <PokemonTypes pokemonTypes={pokemon.types} className={'px-4 py-1.5 text-sm'} />
               </div>
-              <p className="text-slate-400 leading-relaxed max-w-lg">
-                It spits fire that is hot enough to melt boulders. It may cause forest fires by blowing flames.
-              </p>
             </div>
           </div>
         </div>
@@ -59,66 +56,14 @@ function PokemonDetailPage() {
           <Details pokemon={pokemon} />
         </div>
 
-        {/* Evolution Chain */}
         <div className="bg-slate-800/60 border border-slate-700/50 rounded-2xl p-6 mb-8">
           <h2 className="text-xl font-bold text-white mb-6">Evolution Chain</h2>
-          <div className="flex items-center justify-center gap-4 flex-wrap">
-            <a href="/pokemons/4" className="text-center group cursor-pointer">
-              <div className="w-24 h-24 mx-auto mb-2 bg-linear-to-br from-orange-500/20 to-red-600/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                <img
-                  src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png"
-                  alt="Charmander"
-                  className="w-20 h-20 object-contain"
-                />
-              </div>
-              <p className="text-white text-sm font-medium">Charmander</p>
-              <p className="text-slate-500 text-xs">#004</p>
-            </a>
-
-            <div className="text-slate-600 flex flex-col items-center">
-              <span className="text-xs text-slate-500 mb-1">Lv. 16</span>
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </div>
-
-            <a href="/pokemons/5" className="text-center group cursor-pointer">
-              <div className="w-24 h-24 mx-auto mb-2 bg-linear-to-br from-orange-500/20 to-red-600/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                <img
-                  src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/5.png"
-                  alt="Charmeleon"
-                  className="w-20 h-20 object-contain"
-                />
-              </div>
-              <p className="text-white text-sm font-medium">Charmeleon</p>
-              <p className="text-slate-500 text-xs">#005</p>
-            </a>
-
-            <div className="text-slate-600 flex flex-col items-center">
-              <span className="text-xs text-slate-500 mb-1">Lv. 36</span>
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </div>
-
-            <div className="text-center">
-              <div className="w-24 h-24 mx-auto mb-2 bg-linear-to-br from-orange-500/20 to-red-600/20 rounded-full flex items-center justify-center ring-2 ring-yellow-500/50">
-                <img
-                  src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png"
-                  alt="Charizard"
-                  className="w-20 h-20 object-contain"
-                />
-              </div>
-              <p className="text-yellow-400 text-sm font-medium">Charizard</p>
-              <p className="text-slate-500 text-xs">#006</p>
-            </div>
-          </div>
+          <EvolutionTree />
         </div>
 
-        {/* Moves Preview */}
         <div className="bg-slate-800/60 border border-slate-700/50 rounded-2xl p-6">
           <h2 className="text-xl font-bold text-white mb-4">Moves</h2>
-          <Moves moves={moves} loading={movesLoading} />
+          <Moves rawMoves={pokemon.moves} />
         </div>
       </div>
     </div>

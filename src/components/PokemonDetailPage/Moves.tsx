@@ -1,11 +1,12 @@
-import type { MoveDetail } from '@/types/pokemon';
+import { usePokemonMoves } from '@/hooks/usePokemonMoves';
+import type { PokemonMoveEntry } from '@/types/pokemon';
 
 interface MovesProps {
-  moves: MoveDetail[];
-  loading: boolean;
+  rawMoves: PokemonMoveEntry[];
 }
 
-export function Moves({ moves, loading }: MovesProps) {
+export function Moves({ rawMoves }: MovesProps) {
+  const { moves, loading } = usePokemonMoves(rawMoves);
   if (loading) {
     return (
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">

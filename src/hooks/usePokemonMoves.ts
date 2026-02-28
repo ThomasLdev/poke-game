@@ -7,15 +7,6 @@ export function usePokemonMoves(rawMoves: PokemonMoveEntry[] | undefined) {
   const [moves, setMoves] = useState<MoveDetail[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [prevRawMoves, setPrevRawMoves] = useState(rawMoves);
-
-  if (rawMoves !== prevRawMoves) {
-    setPrevRawMoves(rawMoves);
-    setMoves([]);
-    setLoading(true);
-    setError(null);
-  }
-
   useEffect(() => {
     if (!rawMoves || rawMoves.length === 0) return;
 

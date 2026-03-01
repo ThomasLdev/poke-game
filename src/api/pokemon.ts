@@ -9,16 +9,14 @@ export function getMove(name: string): Promise<MoveDetail> {
   return get<MoveDetail>(`/move/${name}`);
 }
 
-export function getSpecies(idOrName: number | string): Promise<PokemonSpecies> {
-  const species = get<PokemonSpecies>(`/pokemon-species/${idOrName}`);
+export async function getSpecies(idOrName: number | string): Promise<PokemonSpecies> {
+  const species = await get<PokemonSpecies>(`/pokemon-species/${idOrName}`);
 
-  return species.then((species) => {
-    species.flavor_text_entries = species.flavor_text_entries.filter((p) => {
-      return p.language.name === 'en' && p.version.name === 'red';
-    });
+  species.flavor_text_entries = species.flavor_text_entries.filter((p) => {
+    return p.language.name === 'en' && p.version.name === 'red';
+  });
 
-    return species;
-  })
+  return species;
 }
 
 export async function getPokemonList(limit: number = 20, offset: number = 0) {

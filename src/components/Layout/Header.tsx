@@ -24,12 +24,18 @@ export function Header() {
               />
             </svg>
           </div>
-          <input
-            type="text"
-            placeholder="Search..."
-            aria-label="Search Pokémon"
-            className="w-full pl-9 pr-4 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white text-sm placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-yellow-400/50 focus:border-yellow-400/50 transition-all"
-          />
+          <form action="">
+            <label htmlFor="search">
+              <input
+                  type="text"
+                  id="search"
+                  name="search"
+                  placeholder="Search..."
+                  aria-label="Search Pokémon"
+                  className="w-full pl-9 pr-4 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white text-sm placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-yellow-400/50 focus:border-yellow-400/50 transition-all"
+              />
+            </label>
+          </form>
         </div>
       </div>
     </header>

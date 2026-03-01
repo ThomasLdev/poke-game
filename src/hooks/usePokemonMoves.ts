@@ -1,47 +1,37 @@
-import { useState, useEffect } from 'react';
+import { useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { getMove } from '@/api/pokemon';
 import { selectCandidates, selectDiverseMoves } from '@/utils/moves';
+import { pokemonKeys } from '@/hooks/queryKeys';
 import type { MoveDetail, PokemonMoveEntry } from '@/types/pokemon';
 
 export function usePokemonMoves(rawMoves: PokemonMoveEntry[] | undefined) {
-  const [moves, setMoves] = useState<MoveDetail[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  useEffect(() => {
-    if (!rawMoves || rawMoves.length === 0) return;
+  const candidateNames = useMemo(
+    () => (rawMoves && rawMoves.length > 0 ? selectCandidates(rawMoves) : []),
+    [rawMoves],
+  );
 
-    let ignore = false;
-
-    const candidateNames = selectCandidates(rawMoves);
-
-    Promise.allSettled(candidateNames.map((name) => getMove(name))).then((results) => {
-      if (ignore) return;
+  const { data, isLoading, error } = useQuery({
+    queryKey: pokemonKeys.moves(candidateNames.join(',')),
+    queryFn: async () => {
+      const results = await Promise.allSettled(candidateNames.map((name) => getMove(name)));
 
       const fulfilled = results
         .filter((r): r is PromiseFulfilledResult<MoveDetail> => r.status === 'fulfilled')
         .map((r) => r.value);
 
       if (fulfilled.length === 0) {
-        setError('Failed to load moves');
-        setLoading(false);
-        return;
+        throw new Error('Failed to load moves');
       }
 
-      setMoves(selectDiverseMoves(fulfilled));
-      setLoading(false);
-    });
+      return selectDiverseMoves(fulfilled);
+    },
+    enabled: candidateNames.length > 0,
+  });
 
-    return () => {
-      ignore = true;
-    };
-  }, [rawMoves]);
-
-  if (!rawMoves) {
-    return { moves: [], loading: true, error: null };
-  }
-  if (rawMoves.length === 0) {
-    return { moves: [], loading: false, error: null };
-  }
-
-  return { moves, loading, error };
+  return {
+    moves: data ?? [],
+    loading: isLoading,
+    error: error ? (error instanceof Error ? error.message : 'Failed to load moves') : null,
+  };
 }

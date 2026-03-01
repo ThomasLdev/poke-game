@@ -37,6 +37,9 @@ export interface Pokemon {
 
 export interface PokemonSpecies {
   flavor_text_entries: FlavorTextEntry[];
+  evolution_chain: {
+    url: string;
+  };
 }
 
 export interface PokemonMoveEntry {
@@ -82,6 +85,19 @@ export interface PokemonSprites {
   };
 }
 
-// export interface PokemonEvolutionTree {
-//
-// }
+export interface PokemonEvolutionChain {
+  id: number;
+  chain: EvolutionNode;
+}
+
+export interface EvolutionNode {
+  species: NamedAPIResource;
+  is_baby: boolean;
+  evolution_details: EvolutionDetail[];
+  evolves_to: EvolutionNode[];
+}
+
+export interface EvolutionDetail {
+  trigger: NamedAPIResource;
+  min_level: number | null;
+}

@@ -1,8 +1,9 @@
 import { useParams, useLocation } from 'react-router';
 import { usePokemon } from '@/hooks/usePokemon';
 import { PokemonNumber, PokemonTypes } from '@/components/Pokemon';
-import { Stats, Details, Moves, EvolutionTree, Description } from '@/components/PokemonDetailPage';
+import { Stats, Details, Moves, EvolutionChain, Description } from '@/components/PokemonDetailPage';
 import { Header } from '@/components/Layout';
+import { extract } from '@/utils/urlIdExtractor';
 
 function PokemonDetailPage() {
   const { id } = useParams();
@@ -43,7 +44,7 @@ function PokemonDetailPage() {
               <div className="flex gap-2 justify-center md:justify-start mb-6">
                 <PokemonTypes pokemonTypes={pokemon.types} className={'px-4 py-1.5 text-sm'} />
               </div>
-              <Description idOrName={pokemon.id} />
+              <Description speciesDetails={pokemon.species_detail} />
             </div>
           </div>
         </div>
@@ -55,7 +56,14 @@ function PokemonDetailPage() {
 
         <div className="bg-slate-800/60 border border-slate-700/50 rounded-2xl p-6 mb-8">
           <h2 className="text-xl font-bold text-white mb-6">Evolution Chain</h2>
-          <EvolutionTree />
+          {
+            pokemon.species_detail
+                ? <EvolutionChain pokemon_name={pokemon.name}
+                                  evolution_chain_id={extract(pokemon.species_detail.evolution_chain.url)}
+                />
+                : <p className="text-white">No information available</p>
+          }
+
         </div>
 
         <div className="bg-slate-800/60 border border-slate-700/50 rounded-2xl p-6">

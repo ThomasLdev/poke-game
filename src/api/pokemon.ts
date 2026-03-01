@@ -1,22 +1,27 @@
 import { get } from '@/api/client';
-import type {MoveDetail, Pokemon, PokemonListResponse, PokemonSpecies} from '@/types/pokemon';
+import type {MoveDetail, Pokemon, PokemonEvolutionChain, PokemonListResponse, PokemonSpecies} from '@/types/pokemon';
 
 export async function getPokemon(idOrName: number | string): Promise<Pokemon> {
   return get<Pokemon>(`/pokemon/${idOrName}`);
 }
 
-export function getMove(name: string): Promise<MoveDetail> {
-  return get<MoveDetail>(`/move/${name}`);
-}
-
-export async function getSpecies(idOrName: number | string): Promise<PokemonSpecies> {
+export async function getPokemonDetail(idOrName: number | string): Promise<Pokemon> {
+  const pokemon = await get<Pokemon>(`/pokemon/${idOrName}`);
   const species = await get<PokemonSpecies>(`/pokemon-species/${idOrName}`);
 
   species.flavor_text_entries = species.flavor_text_entries.filter((p) => {
     return p.language.name === 'en' && p.version.name === 'red';
   });
 
-  return species;
+  return {...pokemon, species_detail: species};
+}
+
+export function getMove(name: string): Promise<MoveDetail> {
+  return get<MoveDetail>(`/move/${name}`);
+}
+
+export function getPokemonEvolutionChain(id: number): Promise<PokemonEvolutionChain> {
+  return get<PokemonEvolutionChain>(`/evolution-chain/${id}`);
 }
 
 export async function getPokemonList(limit: number = 20, offset: number = 0) {

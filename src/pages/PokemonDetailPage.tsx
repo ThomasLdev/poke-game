@@ -78,7 +78,7 @@ function PokemonDetailPage() {
                 ? <EvolutionChain pokemon_name={pokemon.name}
                                   evolution_chain_id={extract(pokemon.species_detail.evolution_chain.url)}
                 />
-                : <div className="min-h-[8.5rem] flex items-center justify-center gap-4 flex-wrap animate-pulse">
+                : <div className="min-h-34 flex items-center justify-center gap-4 flex-wrap animate-pulse">
                     {[0, 1, 2].map((i) => (
                       <div key={i} className="contents">
                         {i > 0 && (

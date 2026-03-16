@@ -35,7 +35,7 @@ export function EvolutionChain({ pokemon_name, evolution_chain_id }: EvolutionCh
   const { evolution_tree, loading, error } = usePokemonEvolutionChain(evolution_chain_id);
 
   if (loading) return (
-    <div className="min-h-[8.5rem] flex items-center justify-center gap-4 flex-wrap animate-pulse">
+    <div className="min-h-34 flex items-center justify-center gap-4 flex-wrap animate-pulse">
       {[0, 1, 2].map((i) => (
         <div key={i} className="contents">
           {i > 0 && (
@@ -60,7 +60,7 @@ export function EvolutionChain({ pokemon_name, evolution_chain_id }: EvolutionCh
   const nodes = flattenChain(evolution_tree.chain);
 
   return (
-    <div className="min-h-[8.5rem] flex items-center justify-center gap-4 flex-wrap">
+    <div className="min-h-34 flex items-center justify-center gap-4 flex-wrap">
       {nodes.map((node, i) => (
         <div key={node.id} className="contents">
           {i > 0 && (

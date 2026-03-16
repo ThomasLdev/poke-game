@@ -29,7 +29,7 @@ const mockData: PokemonListResponse = {
 
 describe('Grid', () => {
   it('renders skeleton cards when isLoading is true', () => {
-    const { container } = render(<Grid data={null} isLoading={true} isPlaceholderData={false} />);
+    const { container } = render(<Grid data={null} isLoading={true} isPlaceholderData={false} previousGridPage={1} />);
 
     const skeletons = container.querySelectorAll('.animate-pulse');
     expect(skeletons).toHaveLength(20);
@@ -38,7 +38,7 @@ describe('Grid', () => {
   it('renders pokemon cards when data is provided', () => {
     render(
       <MemoryRouter>
-        <Grid data={mockData} isLoading={false} isPlaceholderData={false} />
+        <Grid data={mockData} isLoading={false} isPlaceholderData={false} previousGridPage={1} />
       </MemoryRouter>,
     );
 
@@ -49,7 +49,7 @@ describe('Grid', () => {
   it('renders pokemon images with correct alt text', () => {
     render(
       <MemoryRouter>
-        <Grid data={mockData} isLoading={false} isPlaceholderData={false} />
+        <Grid data={mockData} isLoading={false} isPlaceholderData={false} previousGridPage={1} />
       </MemoryRouter>,
     );
 
@@ -60,7 +60,7 @@ describe('Grid', () => {
   it('links each card to the correct detail page', () => {
     render(
       <MemoryRouter>
-        <Grid data={mockData} isLoading={false} isPlaceholderData={false} />
+        <Grid data={mockData} isLoading={false} isPlaceholderData={false} previousGridPage={1} />
       </MemoryRouter>,
     );
 

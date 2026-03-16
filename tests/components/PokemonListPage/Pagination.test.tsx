@@ -7,9 +7,9 @@ const defaults = {
   next: 'https://pokeapi.co/api/v2/pokemon?offset=20&limit=20',
   previous: 'https://pokeapi.co/api/v2/pokemon?offset=0&limit=20',
   onPageChange: vi.fn(),
-  limit: 20,
-  offset: 20,
+  page: 2,
   loading: false,
+  extraClass: '',
 };
 
 describe('Pagination', () => {
@@ -39,21 +39,21 @@ describe('Pagination', () => {
     expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
   });
 
-  it('calls onPageChange with offset - limit when Previous is clicked', async () => {
+  it('calls onPageChange with page - 1 when Previous is clicked', async () => {
     const onPageChange = vi.fn();
     render(<Pagination {...defaults} onPageChange={onPageChange} />);
 
     await userEvent.click(screen.getByRole('button', { name: 'Previous' }));
 
-    expect(onPageChange).toHaveBeenCalledWith(0);
+    expect(onPageChange).toHaveBeenCalledWith(1);
   });
 
-  it('calls onPageChange with offset + limit when Next is clicked', async () => {
+  it('calls onPageChange with page + 1 when Next is clicked', async () => {
     const onPageChange = vi.fn();
     render(<Pagination {...defaults} onPageChange={onPageChange} />);
 
     await userEvent.click(screen.getByRole('button', { name: 'Next' }));
 
-    expect(onPageChange).toHaveBeenCalledWith(40);
+    expect(onPageChange).toHaveBeenCalledWith(3);
   });
 });

@@ -11,8 +11,6 @@ function PokemonDetailPage() {
   const { pokemon, error } = usePokemon(id!, state?.pokemon ?? null);
   const previousGridPage = state.previousGridPage ?? 1;
 
-  console.log(state.previousGridPage);
-
   if (error)
     return <div className="min-h-screen bg-slate-900 text-red-400 flex items-center justify-center">{error}</div>;
 

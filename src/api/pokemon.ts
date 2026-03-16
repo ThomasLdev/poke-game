@@ -1,7 +1,7 @@
 import { get } from '@/api/client';
 import type {MoveDetail, Pokemon, PokemonEvolutionChain, PokemonListResponse, PokemonSpecies} from '@/types/pokemon';
 
-export async function getPokemon(idOrName: number | string): Promise<Pokemon> {
+async function getPokemon(idOrName: number | string): Promise<Pokemon> {
   return get<Pokemon>(`/pokemon/${idOrName}`);
 }
 

@@ -7,9 +7,10 @@ interface GridProps {
   data: PokemonListResponse | null;
   isLoading: boolean;
   isPlaceholderData: boolean;
+  previousGridPage: number;
 }
 
-export function Grid({ data, isLoading, isPlaceholderData }: GridProps) {
+export function Grid({ data, isLoading, isPlaceholderData, previousGridPage }: GridProps) {
   return (
     <div className="max-w-7xl mx-auto px-4 pb-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
       {isLoading
@@ -18,7 +19,7 @@ export function Grid({ data, isLoading, isPlaceholderData }: GridProps) {
             <Link
               key={pokemon.id}
               to={`/pokemons/${pokemon.id}`}
-              state={{ pokemon }}
+              state={{ pokemon, previousGridPage }}
               className={`group h-52 bg-slate-800/60 border border-slate-700/50 rounded-2xl p-4 text-center hover:border-green-500/50 hover:bg-slate-800 transition-all cursor-pointer ${isPlaceholderData ? 'opacity-50 transition-opacity' : ''}`}
             >
               <div className="relative">

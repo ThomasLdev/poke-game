@@ -1,15 +1,17 @@
-import {useParams, useLocation} from 'react-router';
+import {useParams, useLocation, Link} from 'react-router';
 import { usePokemon } from '@/hooks/usePokemon';
 import { PokemonNumber, PokemonTypes } from '@/components/Pokemon';
 import { Stats, Details, Moves, EvolutionChain, Description } from '@/components/PokemonDetailPage';
 import { Header } from '@/components/Layout';
 import { extract } from '@/utils/urlIdExtractor';
-import {Button} from "@/components/DesignSystem/Button/Button.tsx";
 
 function PokemonDetailPage() {
   const { id } = useParams();
   const { state } = useLocation();
   const { pokemon, error } = usePokemon(id!, state?.pokemon ?? null);
+  const previousGridPage = state.previousGridPage ?? 1;
+
+  console.log(state.previousGridPage);
 
   if (error)
     return <div className="min-h-screen bg-slate-900 text-red-400 flex items-center justify-center">{error}</div>;
@@ -20,7 +22,11 @@ function PokemonDetailPage() {
 
       <div className="max-w-5xl mx-auto px-4 py-8">
         <div className="mb-5">
-          <Button isDisabled={false} onClick={() => {}} text={'Back'} />
+          <Link className='px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg cursor-pointer text-slate-300 hover:border-yellow-500/50 transition-colors'
+                to={'/pokemons?page=' + previousGridPage}
+          >
+            Back
+          </Link>
         </div>
 
         <div className="bg-linear-to-br from-orange-500/10 via-red-500/10 to-yellow-500/10 border border-slate-700/50 rounded-3xl p-8 mb-8">
@@ -77,6 +83,7 @@ function PokemonDetailPage() {
             pokemon?.species_detail
                 ? <EvolutionChain pokemon_name={pokemon.name}
                                   evolution_chain_id={extract(pokemon.species_detail.evolution_chain.url)}
+                                  previousGridPage={previousGridPage}
                 />
                 : <div className="min-h-34 flex items-center justify-center gap-4 flex-wrap animate-pulse">
                     {[0, 1, 2].map((i) => (

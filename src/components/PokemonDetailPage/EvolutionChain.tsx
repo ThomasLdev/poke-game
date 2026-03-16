@@ -7,6 +7,7 @@ import type { EvolutionNode } from '@/types/pokemon';
 interface EvolutionChainProps {
   pokemon_name: string;
   evolution_chain_id: number;
+  previousGridPage: number;
 }
 
 interface FlatNode {
@@ -31,7 +32,7 @@ function flattenChain(node: EvolutionNode): FlatNode[] {
   return result;
 }
 
-export function EvolutionChain({ pokemon_name, evolution_chain_id }: EvolutionChainProps) {
+export function EvolutionChain({ pokemon_name, evolution_chain_id, previousGridPage }: EvolutionChainProps) {
   const { evolution_tree, loading, error } = usePokemonEvolutionChain(evolution_chain_id);
 
   if (loading) return (
@@ -75,6 +76,7 @@ export function EvolutionChain({ pokemon_name, evolution_chain_id }: EvolutionCh
           )}
           <Link
             to={`/pokemons/${node.id}`}
+            state={{previousGridPage}}
             className={`text-center group cursor-pointer ${node.name === pokemon_name ? '' : ''}`}
           >
             <div

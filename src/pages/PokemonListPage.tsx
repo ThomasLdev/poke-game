@@ -18,7 +18,7 @@ function PokemonListPage() {
       <Header/>
 
       <div className="max-w-7xl mx-auto px-4 pt-8 pb-4">
-        <h1 className="text-3xl font-bold text-white mb-1">All Pokémon</h1>
+        <h1 className="text-3xl font-bold text-white mb-1 text-center lg:text-start">All Pokémon</h1>
       </div>
 
       <Pagination
@@ -29,7 +29,11 @@ function PokemonListPage() {
         loading={isLoading || isPlaceholderData}
         extraClass={'pb-6 md:hidden'}
       />
-      <Grid data={data} isLoading={isLoading} isPlaceholderData={isPlaceholderData}/>
+      <Grid data={data}
+            isLoading={isLoading}
+            isPlaceholderData={isPlaceholderData}
+            previousGridPage={page}
+      />
       <Pagination
         next={data?.next ?? null}
         previous={data?.previous ?? null}

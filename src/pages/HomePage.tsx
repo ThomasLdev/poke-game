@@ -1,3 +1,5 @@
+import {Link} from "react-router";
+
 function HomePage() {
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-900 via-purple-950 to-slate-900 flex flex-col items-center justify-center px-4">
@@ -36,39 +38,12 @@ function HomePage() {
         </div>
       </div>
 
-      {/* Quick Links */}
       <div className="mt-10 flex gap-4">
-        <a
-          href="/pokemons"
-          className="px-6 py-3 bg-yellow-500 hover:bg-yellow-400 text-slate-900 font-semibold rounded-xl transition-colors shadow-lg shadow-yellow-500/20"
+        <Link to={`/pokemons?page=1`}
+              className="px-6 py-3 bg-yellow-500 hover:bg-yellow-400 text-slate-900 font-semibold rounded-xl transition-colors shadow-lg shadow-yellow-500/20"
         >
           Browse All Pokémon
-        </a>
-      </div>
-
-      {/* Featured Pokémon Preview */}
-      <div className="mt-16 grid grid-cols-3 gap-6">
-        <div className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-6 text-center backdrop-blur-sm hover:border-yellow-500/30 transition-colors">
-          <div className="w-20 h-20 mx-auto mb-3 bg-linear-to-br from-green-400 to-emerald-600 rounded-full flex items-center justify-center text-3xl">
-            🌿
-          </div>
-          <p className="text-white font-medium">Bulbasaur</p>
-          <p className="text-slate-500 text-sm">#001</p>
-        </div>
-        <div className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-6 text-center backdrop-blur-sm hover:border-yellow-500/30 transition-colors">
-          <div className="w-20 h-20 mx-auto mb-3 bg-linear-to-br from-orange-400 to-red-600 rounded-full flex items-center justify-center text-3xl">
-            🔥
-          </div>
-          <p className="text-white font-medium">Charmander</p>
-          <p className="text-slate-500 text-sm">#004</p>
-        </div>
-        <div className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-6 text-center backdrop-blur-sm hover:border-yellow-500/30 transition-colors">
-          <div className="w-20 h-20 mx-auto mb-3 bg-linear-to-br from-blue-400 to-cyan-600 rounded-full flex items-center justify-center text-3xl">
-            💧
-          </div>
-          <p className="text-white font-medium">Squirtle</p>
-          <p className="text-slate-500 text-sm">#007</p>
-        </div>
+        </Link>
       </div>
     </div>
   );

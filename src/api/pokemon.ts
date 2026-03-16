@@ -10,7 +10,7 @@ export async function getPokemonDetail(idOrName: number | string): Promise<Pokem
   const species = await get<PokemonSpecies>(`/pokemon-species/${idOrName}`);
 
   species.flavor_text_entries = species.flavor_text_entries.filter((p) => {
-    return p.language.name === 'en' && p.version.name === 'red';
+    return p.language.name === 'en';
   });
 
   return {...pokemon, species_detail: species};

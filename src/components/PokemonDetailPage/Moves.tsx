@@ -2,12 +2,12 @@ import { usePokemonMoves } from '@/hooks/usePokemonMoves';
 import type { PokemonMoveEntry } from '@/types/pokemon';
 
 interface MovesProps {
-  rawMoves: PokemonMoveEntry[];
+  rawMoves: PokemonMoveEntry[] | null;
 }
 
 export function Moves({ rawMoves }: MovesProps) {
-  const { moves, loading } = usePokemonMoves(rawMoves);
-  if (loading) {
+  const { moves, loading } = usePokemonMoves(rawMoves ?? []);
+  if (!rawMoves || loading) {
     return (
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
         {Array.from({ length: 8 }).map((_, i) => (

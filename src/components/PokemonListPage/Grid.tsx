@@ -11,7 +11,7 @@ interface GridProps {
 
 export function Grid({ data, isLoading, isPlaceholderData }: GridProps) {
   return (
-    <div className="max-w-7xl mx-auto px-4 pb-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+    <div className="max-w-7xl mx-auto px-4 pb-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
       {isLoading
         ? Array.from({ length: 20 }).map((_, i) => <GridSkeletonCard key={i} />)
         : data?.results.map((pokemon) => (

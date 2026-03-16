@@ -34,14 +34,33 @@ function flattenChain(node: EvolutionNode): FlatNode[] {
 export function EvolutionChain({ pokemon_name, evolution_chain_id }: EvolutionChainProps) {
   const { evolution_tree, loading, error } = usePokemonEvolutionChain(evolution_chain_id);
 
-  if (loading) return <p className="text-slate-400">Loading evolution chain...</p>;
+  if (loading) return (
+    <div className="min-h-[8.5rem] flex items-center justify-center gap-4 flex-wrap animate-pulse">
+      {[0, 1, 2].map((i) => (
+        <div key={i} className="contents">
+          {i > 0 && (
+            <div className="text-slate-700">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          )}
+          <div className="text-center">
+            <div className="w-24 h-24 mx-auto mb-2 bg-slate-700/50 rounded-full" />
+            <div className="h-4 w-16 mx-auto mb-1 bg-slate-700/50 rounded" />
+            <div className="h-3 w-10 mx-auto bg-slate-700/50 rounded" />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
   if (error) return <p className="text-red-400">{error}</p>;
   if (!evolution_tree) return <p className="text-slate-400">No information available</p>;
 
   const nodes = flattenChain(evolution_tree.chain);
 
   return (
-    <div className="flex items-center justify-center gap-4 flex-wrap">
+    <div className="min-h-[8.5rem] flex items-center justify-center gap-4 flex-wrap">
       {nodes.map((node, i) => (
         <div key={node.id} className="contents">
           {i > 0 && (

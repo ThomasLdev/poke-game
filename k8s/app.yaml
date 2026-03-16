@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: poke-game
-          image: ghcr.io/thomasldev/poke-game:20260228112649-615c70b
+          image: ghcr.io/thomasldev/poke-game:20260316215731-6e19e80
           imagePullPolicy: Always
           ports:
             - containerPort: 80

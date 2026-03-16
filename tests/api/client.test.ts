@@ -18,7 +18,7 @@ describe('get', () => {
       new Response(null, { status: 404, statusText: 'Not Found' }),
     );
 
-    await expect(get('/pokemon/0')).rejects.toThrow(
+    expect(get('/pokemon/0')).rejects.toThrow(
       'API error: 404 Not Found',
     );
   });

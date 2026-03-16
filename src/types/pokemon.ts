@@ -10,6 +10,16 @@ export interface NamedAPIResource {
   url: string;
 }
 
+export interface FlavorTextEntry {
+  flavor_text: string;
+  language: {
+    name: string;
+  }
+  version: {
+    name: string;
+  }
+}
+
 export interface Pokemon {
   id: number;
   name: string;
@@ -21,6 +31,35 @@ export interface Pokemon {
   stats: PokemonStat[];
   abilities: PokemonAbility[];
   sprites: PokemonSprites;
+  moves: PokemonMoveEntry[];
+  species_detail: PokemonSpecies | null;
+}
+
+export interface PokemonSpecies {
+  flavor_text_entries: FlavorTextEntry[];
+  evolution_chain: {
+    url: string;
+  };
+}
+
+export interface PokemonMoveEntry {
+  move: NamedAPIResource;
+  version_group_details: VersionGroupDetail[];
+}
+
+export interface VersionGroupDetail {
+  level_learned_at: number;
+  move_learn_method: NamedAPIResource;
+  version_group: NamedAPIResource;
+}
+
+export interface MoveDetail {
+  name: string;
+  type: NamedAPIResource;
+  power: number | null;
+  accuracy: number | null;
+  pp: number;
+  damage_class: NamedAPIResource;
 }
 
 export interface PokemonType {
@@ -44,4 +83,21 @@ export interface PokemonSprites {
       front_default: string;
     };
   };
+}
+
+export interface PokemonEvolutionChain {
+  id: number;
+  chain: EvolutionNode;
+}
+
+export interface EvolutionNode {
+  species: NamedAPIResource;
+  is_baby: boolean;
+  evolution_details: EvolutionDetail[];
+  evolves_to: EvolutionNode[];
+}
+
+export interface EvolutionDetail {
+  trigger: NamedAPIResource;
+  min_level: number | null;
 }

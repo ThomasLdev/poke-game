@@ -4,7 +4,7 @@ export function PokemonTypes({ pokemonTypes, className = '' }: { pokemonTypes: P
   return (
     <>
       {pokemonTypes.map((pokemonType) => (
-        <div key={pokemonType.slot} className={`type-${pokemonType.type.name} ${className}`}>
+        <div key={pokemonType.slot} className={`type-${pokemonType.type.name} rounded-full font-medium capitalize ${className}`}>
           {pokemonType.type.name}
         </div>
       ))}

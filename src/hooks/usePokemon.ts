@@ -1,59 +1,33 @@
-import { useState, useEffect } from 'react';
-import { listPokemons } from '@/api/pokemon';
-import type { PokemonListResponse } from '@/types/pokemon';
+import { useQuery, keepPreviousData } from '@tanstack/react-query';
+import {getPokemonList, getPokemonDetail} from '@/api/pokemon';
+import { pokemonKeys } from '@/hooks/queryKeys';
+import type { Pokemon } from '@/types/pokemon';
 
 export function usePokemonList(limit: number = 20, offset: number = 0) {
-  const [data, setData] = useState<PokemonListResponse | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const [showSkeleton, setShowSkeleton] = useState<boolean>(false);
+  const { data, isLoading, isPlaceholderData, error } = useQuery({
+    queryKey: pokemonKeys.list(limit, offset),
+    queryFn: () => getPokemonList(limit, offset),
+    placeholderData: keepPreviousData,
+  });
 
-  useEffect(() => {
-    let ignore = false;
-    let skeletonTimeout: ReturnType<typeof setTimeout> | null = null;
+  return {
+    data: data ?? null,
+    isLoading,
+    isPlaceholderData,
+    error: error ? (error instanceof Error ? error.message : 'An unexpected error occurred') : null,
+  };
+}
 
-    if (!data) {
-      setShowSkeleton(true);
-    } else {
-      skeletonTimeout = setTimeout(() => {
-        if (!ignore) setShowSkeleton(true);
-      }, 200);
-    }
+export function usePokemon(id: string, placeholderPokemon?: Pokemon | null) {
+  const { data, isLoading, error } = useQuery({
+    queryKey: pokemonKeys.detail(id),
+    queryFn: () => getPokemonDetail(id),
+    placeholderData: placeholderPokemon ?? undefined,
+  });
 
-    async function fetchData() {
-      setLoading(true);
-      setError(null);
-
-      try {
-        const list = await listPokemons(limit, offset);
-
-        if (!ignore) {
-          if (skeletonTimeout) clearTimeout(skeletonTimeout);
-          setData(list);
-          setShowSkeleton(false);
-        }
-      } catch (error) {
-        if (error instanceof Error) {
-          if (!ignore) {
-            setError(error.message);
-          }
-        } else {
-          if (!ignore) {
-            setError('An unexpected error occurred');
-          }
-        }
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchData();
-
-    return () => {
-      ignore = true;
-      if (skeletonTimeout) clearTimeout(skeletonTimeout);
-    };
-  }, [limit, offset]);
-
-  return { data, loading, showSkeleton, error };
+  return {
+    pokemon: data ?? null,
+    loading: isLoading,
+    error: error ? (error instanceof Error ? error.message : 'Failed to load Pokemon') : null,
+  };
 }

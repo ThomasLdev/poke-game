@@ -1,8 +1,5 @@
 # PokéSearch
 
-[![CI](https://github.com/ThomasLdev/poke-game/actions/workflows/ci.yml/badge.svg)](https://github.com/ThomasLdev/poke-game/actions/workflows/ci.yml)
-![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/ThomasLdev/COVERAGE_GIST_ID/raw/poke-game-coverage.json)
-
 A Pokemon exploration app built with React, TypeScript, and Tailwind CSS. Browse, search, and discover detailed information about Pokemon using the [PokeAPI](https://pokeapi.co/).
 
 ## Features

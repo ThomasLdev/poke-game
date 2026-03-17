@@ -1,2 +1,3 @@
 @import 'tailwindcss';
 @import './styles/pokemon-types.css';
+@import './styles/form/input.css';

@@ -1,3 +1,5 @@
+import {SearchBar} from "@/components/Search";
+
 export function Header() {
   return (
     <header className="sticky top-0 z-10 bg-slate-900/95 backdrop-blur-sm border-b border-slate-800">
@@ -8,35 +10,7 @@ export function Header() {
         >
           PokéSearch
         </a>
-        <div className="relative w-80">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <svg
-              className="h-4 w-4 text-slate-500"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                fillRule="evenodd"
-                d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </div>
-          <form action="">
-            <label htmlFor="search">
-              <input
-                  type="text"
-                  id="search"
-                  name="search"
-                  placeholder="Search..."
-                  aria-label="Search Pokémon"
-                  className="w-full pl-9 pr-4 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white text-sm placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-yellow-400/50 focus:border-yellow-400/50 transition-all"
-              />
-            </label>
-          </form>
-        </div>
+        <SearchBar showError={false} />
       </div>
     </header>
   );

@@ -5,4 +5,5 @@ export const pokemonKeys = {
   evolution_chain: (id: number) => [...pokemonKeys.all, 'evolution_chain', id] as const,
   species: (idOrName: number | string) => [...pokemonKeys.all, 'species', idOrName] as const,
   moves: (key: string) => [...pokemonKeys.all, 'moves', key] as const,
+  search: (name: string) => [...pokemonKeys.all, 'search', name] as const,
 };
